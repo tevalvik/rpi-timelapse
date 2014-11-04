@@ -16,13 +16,20 @@ FRAMES = FRAMES_PER_HOUR * 24 * VIDEO_DAYS
 #print (start <= date <= end)
 
 def time_check():
-	# date = datetime.datetime.now().time()
 	current_time = datetime.datetime.now().time()
 	start = datetime.time(16)
-	end = datetime.time(16,27)
+	end = datetime.time(21,59)
 	return start <= current_time <= end
-	#print datetime.time(16,15) <= datetime.datetime.now().time() < datetime.time(17,22)
-while time_check():
-	print "time check works"
-	time.sleep(5)
+
 	
+def capture_photo():
+	time_now = datetime.datetime.now().time()
+	with picamera.PiCamera() as camera:
+		time.sleep(2)
+		camera.capture('/home/pi/timelapse/dtu/frame%s.jpg' % time_now)
+
+if time_check():
+	capture_photo()
+else:
+    print "hello"
+
