@@ -1,18 +1,29 @@
 import time
+import datetime
 import picamera
 
-VIDEO_DAYS = 1
-FRAMES_PER_HOUR = 60
-FRAMES = FRAMES_PER_HOUR * 24 * VIDEO_DAYS
-
-def capture_frame(frame):
-	with picamera.PiCamera() as cam:
+def time_check():
+	""" Checks whether the time is within a given timeframe. """
+	"Time on the pi is one hour off. 06 = 07"
+	current_time = datetime.datetime.now().time()
+	start = datetime.time(06)
+	end = datetime.time(17)
+	return start <= current_time <= end
+	
+def capture_photo():
+	""" Takes a photo and stores it with the time taken as the name."""
+	time_now = datetime.datetime.now().time()
+	with picamera.PiCamera() as camera:
 		time.sleep(2)
-		cam.capture('/home/pi/timelapse/dtu/image%03d.jpg' % frame)
-		print "Captured image%03d.jpg" % frame
+		print "Taking photo"
+		camera.capture('/home/pi/timelapse/dtu/im%s.jpg' % time_now)
+		print "Photo taken at %s " % time_now
 
-for frame in range(FRAMES):
-	start = time.time()
-	capture_frame(frame)
-	time.sleep(int(60 * 60 / FRAMES_PER_HOUR) - (time.time() - start))
+# Taking pictures in the given timeframe.
+while True:
+	if time_check():
+		capture_photo()
+	else:
+		"Sleep for 30 minutes."
+		time.sleep(1800)
 
