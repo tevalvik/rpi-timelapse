@@ -7,7 +7,7 @@ def time_check():
 	"Time on the pi is one hour off. 06 = 07"
 	current_time = datetime.datetime.now().time()
 	start = datetime.time(06)
-	end = datetime.time(23)
+	end = datetime.time(17)
 	return start <= current_time <= end
 	
 def capture_photo():
