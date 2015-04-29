@@ -6,8 +6,8 @@ def time_check():
 	""" Checks whether the time is within a given timeframe. """
 	"Time on the pi is one hour off. 06 = 07"
 	current_time = datetime.datetime.now().time()
-	start = datetime.time(06)
-	end = datetime.time(17)
+	start = datetime.time(21)
+	end = datetime.time(23)
 	return start <= current_time <= end
 	
 def capture_photo():
@@ -23,7 +23,7 @@ def capture_photo():
 while True:
 	if time_check():
 		capture_photo()
-	else:
-		"Sleep for 30 minutes."
-		time.sleep(1800)
+#	else:
+#		print "Sleep for 30 minutes."
+#		time.sleep(1800)
 
